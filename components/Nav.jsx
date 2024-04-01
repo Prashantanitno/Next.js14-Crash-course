@@ -5,10 +5,12 @@ import Link from "next/link";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const Nav = () => {
-  const isUserLoggedIn = true;
+  const { data: session } = useSession();
 
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
+
+  const isUserLogin = true;
 
   useEffect(() => {
     const settingProviders = async () => {
@@ -33,7 +35,8 @@ const Nav = () => {
 
       {/* Desktop Navigation */}
       <div className="sm:flex hidden">
-        {isUserLoggedIn ? (
+        {/* {session?.user ? ( */}
+        {isUserLogin ? (
           <div className="flex gap-3 md:gap-5">
             <Link href={"/create-prompt"} className="black_btn">
               Create Post
@@ -43,7 +46,8 @@ const Nav = () => {
             </button>
             <Link href={"/profile"}>
               <Image
-                src={"/assets/images/logo.svg"}
+                // src={"/assets/images/logo.svg"}
+                src={session?.user.image}
                 alt="profile"
                 width={37}
                 height={37}
@@ -54,11 +58,14 @@ const Nav = () => {
         ) : (
           <>
             {providers &&
-              object.values(providers).map((provider) => (
+              Object.values(providers).map((provider) => (
                 <button
                   type="button"
                   key={provider.name}
-                  onClick={() => signIn(provider.id)}
+                  onClick={() => {
+                    signIn(provider.id);
+                    console.log("calling");
+                  }}
                   className="black_btn"
                 >
                   Sign In
@@ -70,10 +77,12 @@ const Nav = () => {
 
       {/* Mobile Navigation */}
       <div className="sm:hidden flex relative">
-        {isUserLoggedIn ? (
+        {/* {session?.user ? ( */}
+        {isUserLogin ? (
           <div className="flex">
             <Image
-              src={"/assets/images/logo.svg"}
+              // src={"/assets/images/logo.svg"}
+              src={session?.user.image}
               alt="profile"
               width={37}
               height={37}

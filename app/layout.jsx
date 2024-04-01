@@ -1,5 +1,6 @@
 import React from "react";
 import "@styles/globals.css";
+
 import Nav from "@components/Nav";
 import Provider from "@components/Provider";
 
@@ -10,17 +11,17 @@ export const metadata = {
 
 const RootLayout = ({ children }) => {
   return (
-    <html>
+    <html lang="en">
       <body>
         <Provider>
           <div className="main">
-            <div className="gradients">
-              <main className="app">
-                <Nav />
-                {children}
-              </main>
-            </div>
+            <div className="gradient" />
           </div>
+
+          <main className="app">
+            <Nav />
+            {children}
+          </main>
         </Provider>
       </body>
     </html>
